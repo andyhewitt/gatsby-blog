@@ -6,7 +6,7 @@ module.exports = {
       summary: ``,
     },
     description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://sad-yonath-49fde1.netlify.app/`,
+    siteUrl: `https://andyhewitt.me/`,
     social: {
       twitter: ``,
     },

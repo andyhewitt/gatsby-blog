@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Link, graphql } from "gatsby"
+import _ from 'lodash'
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
@@ -44,7 +45,9 @@ const BlogIndex = ({ data, location }) => {
                       <span itemProp="headline">{title}</span>
                     </Link>
 										<br />
-										<a href="#">{post.frontmatter.tag}</a>
+										<Link to={_.kebabCase(post.frontmatter.category)} itemProp="url">
+											<span style={{color: "#F7A046", fontSize: 14}}>{post.frontmatter.category}</span>
+										</Link>
                   </h2>
                   <small>{post.frontmatter.date}</small>
                 </header>
@@ -83,7 +86,8 @@ export const pageQuery = graphql`
         frontmatter {
           date(formatString: "MMMM DD, YYYY")
           title
-					tag
+					tags
+					category
           description
         }
       }

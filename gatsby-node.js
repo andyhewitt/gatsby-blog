@@ -1,11 +1,15 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
+const _ = require('lodash');
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
   // Define a template for blog post
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
+
+  // Tags list
+  const blogCategory = path.resolve('./src/templates/tag-categories.js')
 
   // Get all markdown blog posts sorted by date
   const result = await graphql(
@@ -16,6 +20,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           limit: 1000
         ) {
           nodes {
+						frontmatter {
+              category
+            }
             id
             fields {
               slug
@@ -54,6 +61,16 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           nextPostId,
         },
       })
+
+			if (post.frontmatter.category) {
+				createPage({
+					path: _.kebabCase(post.frontmatter.category),
+					component: blogCategory,
+					context: {
+						category: post.frontmatter.category
+					},
+				})
+			}
     })
   }
 }
