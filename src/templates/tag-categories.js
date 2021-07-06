@@ -1,18 +1,25 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
 
-const TagsListTemplate = ({ data }) => {
+import Layout from "../components/layout"
+
+const TagsListTemplate = ({ data, pageContext, location }) => {
+	console.log(location);
+	const { category } = pageContext;
   const posts = data.allMarkdownRemark
   return (
-    <ul>
-      {posts.nodes.map(post => (
-        <li key={post.frontmatter.title}>
-          <Link to={post.fields.slug}>
-            {post.frontmatter.title}
-          </Link>
-        </li>
-      ))}
-    </ul>
+		<Layout location={location} title={"All posts"}>
+			<h1>{category}</h1>
+			<ul>
+				{posts.nodes.map(post => (
+					<li key={post.frontmatter.title}>
+						<Link to={post.fields.slug}>
+							{post.frontmatter.title}
+						</Link>
+					</li>
+				))}
+			</ul>
+		</Layout>
   )
 }
 
